@@ -1,1 +1,180 @@
-1
+## Лабораторная работа по курсу «Основы Python»
+
+### При выполнении работы допускается использование любых внешних модулей и пакетов.
+
+#### Задача 1
+
+Дан список:
+
+list_01 = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 14, 46, 273, 22, 99, 15, 1000]
+
+Напишите алгоритм, который выводит число, равное сумме элементов списка, которые больше 10, но меньше 100, и которые больше 200, но меньше 500.
+
+a = []
+for x in (list_01):
+   if (x > 10 and x <100) or (x > 200 and x < 500):
+    a.append(x)
+print(sum(a))
+
+#### Задача 2
+
+Дана строка:
+
+some_string = "History is always written by the winners. When two cultures clash, the loser is obliterated, and the winner writes the history books - books which glorify their own cause and disparage the conquered foe. As Napoleon once said, 'What is history, but a fable agreed upon?'"
+
+Напишите функцию, которая будет принимать в качестве аргумента букву и выводить все слова из строки, начинающиеся на эту букву (например, “w”).
+
+import re
+
+def word (y):
+ some_list =[item for item in re.split(r"[.,-?' ]+", some_string.lower()) if item]
+ for x in some_list:
+  if y in x[0]:
+   print(x)
+
+#пусть буква будут маленькие, что бы не перебирать два раза текст
+
+word('w')
+
+#### Задача 3
+
+Напишите функцию, которая генерирует случайную последовательность из 6 цифр, причем в этой последовательности должна быть как минимум одна цифра 3. Позиция 3 определяться случайным образом. Например: "456379" или "033456".
+
+import random
+
+def rand (x):
+  some_list=[x]
+
+  for i in range(5):
+   some_list.append(random.randrange(0, 10))
+  b=random.shuffle(some_list)
+  it = iter(some_list)
+  for i in some_list:
+   print(next(it), end='')
+
+#можно вставлять любое число
+
+rand(3)
+
+#### Задача 4
+
+Данные студентов представлены в виде списка списков:
+
+students = [
+["0001", "Антонов", "Антон", "Игоревич", "20.08.2009","БСТ161"],
+["1102", "Богов", "Артем", "Игоревич", "25.01.2010","БСТ162"],
+["0333", "Глаголева", "Анастасия", "Николаевна", "11.07.2009", "БСТ163"],
+["4004", "Степанова", "Наталья", "Александровна", "13.02.2008", "БСТ161"],
+["0045", "Боков", "Игорь", "Харитонович", "02.06.2009", "БСТ161"],
+["0096", "Васильков", "Валентин", "Сергеевич", "20.03.2009", "БСТ164"],
+["0607", "Сиропова", "Виолетта", "Эдуардовна", "28.05.2010", "БСТ162"],
+["4014", "Потапов", "Дмитрий", "Станиславович", "14.02.2012", "БСТ161"]
+    ]
+
+1. Преобразуйте данные таким образом, чтобы они были представлены в виде словаря, в котором ключами являются номера студентов, а значениями — список из других данных о студентах.
+
+stud_dict={}
+for rows in students:
+  for index in rows:
+    keys = rows[0]
+    values = rows[1::]
+    stud_dict [keys]= values
+
+ stud_dict
+
+2. Напишите функцию, которая принимает номер группы и выводит пронумерованный и упорядоченный по алфавиту список (фамилии, имена, отчества) всех студентов этой группы. Необходимо обращаться к словарю.
+
+def spiski (x):
+  spisok = []
+  for index, element in stud_dict.items():
+   if element[4]==x:
+    spisok.append(element[0:3])
+  for i, student in enumerate(sorted(spisok)):
+    print(i+1,student)
+
+spiski(input('введите номер группы на выбор БСТ161 или БСТ162 или БСТ163 или БСТ164: '))
+
+#### Задача 5
+
+Создайте класс Student, который создает объекты с данными о студентах (как в
+задаче 4). Класс должен иметь следующие методы: add_to_dict (добавляет объект в словарь из задачи 4), update_dict (обновляет запись о студенте в словаре из задачи 4), change_group (изменяет номер группы студента), change_id (изменяет номер студента) и print_date (выводит на экран данные студента).
+
+class Student:
+    def __init__(self, s_id, last_name, first_name, patronomic_name, date, group):
+      self.s_id = s_id
+      self.last_name = last_name
+      self.first_name = first_name
+      self.patronomic_name = patronomic_name
+      self.date = date
+      self.group = group
+
+
+    def add_to_dict(self):
+      stud_dict[self.s_id] = [self.last_name, self.first_name,  self.patronomic_name, self.date, self.group]
+
+    def update_dict(self):
+      stud_dict.update({self.s_id : [self.last_name, self.first_name,  self.patronomic_name, self.date, self.group]})
+
+
+
+    def change_group(self, new_group):
+      self.group=new_group
+
+
+    def change_id(self, new_id):
+      self.s_id = new_id
+
+
+    def print_data(self):
+      print(f'{self.last_name} {self.first_name} {self.group}')
+
+
+
+1. Создайте объект класса, добавьте его в словарь. Обновленный словарь выведете на экран.
+
+volkova = Student('0001', 'Волкова', 'Галина', 'Сергеевна', '18.12.2022', 'БСТ100')
+
+volkova.s_id
+
+#Добавляя студента волкову мы учитываем тот факт, что такой ключ существует, поэтому студент Антонов отчисляется
+Student.add_to_dict(volkova)
+
+from pprint import pprint
+
+pprint(stud_dict)
+
+2. Измените номер группы студентки Волковой на 'БСТ161' и выведите обновленный список группы.
+
+Student.change_group(volkova, 'БСТ161')
+
+Student.update_dict(volkova)
+
+pprint(stud_dict)
+
+Student.print_data(volkova)
+
+#### Задача 6
+
+Дана матрица matrix. Напишите код, который будет транспонировать её (то есть, делать из строк столбцы) в maytix_t:
+
+matrix_t = [
+    [0, 6, 3, 4, 5],
+    [1, 2, 3, 6, 7],
+    [2, 2, 3, 7, 3],
+    [4, 1, 3, 1, 4],
+    [8, 9, 3, 2, 0]
+]
+
+matrix = [
+    [0,1,2,4,8],
+    [6,2,2,1,9],
+    [3,3,3,3,3],
+    [4,6,7,1,2],
+    [5,7,3,4,0]
+]
+
+print(matrix)
+
+matrix_t = list(map(list, zip(*matrix)))
+
+print(matrix_t)
